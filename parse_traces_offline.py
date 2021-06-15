@@ -1,3 +1,4 @@
+from consts import *
 import dateutil.parser
 import datetime
 from copy import deepcopy
@@ -20,7 +21,7 @@ if len(sys.argv) > 2:
     
 print "Global date:", global_date
 
-fnames = glob.glob("/srv/data2/rachee/daily_dumps_ripe/*")
+fnames = glob.glob(RIPE_DAILY_DUMPS)
 fnames.sort()
 per_day_fnames = {}
 for fname in fnames:
