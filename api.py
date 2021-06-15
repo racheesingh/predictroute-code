@@ -148,21 +148,6 @@ def ip2pref_bgp_ts(ip, ts=None):
     if node:
         return node.prefix.replace('/', '_')
     return None
-
-alive_taps = {}
-for fname in glob.glob("scans/*"):
-    with open(fname) as fi:
-        reader = csv.reader(fi)
-        for row in reader:
-            if row[-1] in alive_taps: continue
-            if row[-2] == 'True':
-                alive_taps[row[-1]] = True
-
-def is_alive(tap_name):
-    if tap_name in alive_taps:
-        return True
-    else:
-        return False
     
 class PathBuffer(object):
     def __init__(self):
@@ -184,30 +169,6 @@ class PathBuffer(object):
         hashable_path = tuple(path)
         self.paths.remove(hashable_path)
         return path
-
-alive_decoys = {}
-all_decoys = set()
-for fname in glob.glob("scans/*"):
-    same_client_diff_reaction = {}
-    with open(fname) as fi:
-        reader = csv.reader(fi)
-        for row in reader:
-            all_decoys.add(row[0])
-            if row[0] in same_client_diff_reaction:
-                print "Same client-dst pair but consistent behaviour", row[0], fname, row[-2]
-                if same_client_diff_reaction[row[0]] != row[-2]:
-                    print "WTH, decoy has dual behaviour with the same client", row[0], fname
-            else:
-                same_client_diff_reaction[row[0]] = row[-2]
-            if row[0] in alive_decoys: continue
-            if row[-2] == 'True':
-                alive_decoys[row[0]] = True
-
-# alive_decoys_curveball = []
-# with open("data/curveball.csv") as fi:
-#     reader = csv.reader(fi)
-#     for row in reader:
-#         alive_decoys_curveball.append(row[0])
         
 def get_probes_from_metadata(fname):
     with open(fname) as fi:
@@ -222,7 +183,7 @@ def get_probes_from_metadata(fname):
                 ripe_probes[pr['asn_v4']] = [pr['id']]
     return ripe_probes
 
-ripe_probes = get_probes_from_metadata("/home/rachee/data/20181011.json")
+ripe_probes = get_probes_from_metadata(RIPE_PROBE_METADATA)
 def get_sources():
     sources = []
     for asn in ripe_probes:
@@ -286,7 +247,7 @@ def run_trace_from_all_ripe(ip_in_prefix, sources, in_parts=False):
     return measurement_ids
 
 orgs = {}
-with open("/home/rachee/data/20180101.as-org2info.txt", "rb") as f:
+with open(CAIDA_AS2ORG, "rb") as f:
     for line in f:
         # ignore commented lines
         if line[0] == "#":

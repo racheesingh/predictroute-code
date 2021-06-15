@@ -1,0 +1,3 @@
+## Predictroute
+
+# Create a file `consts.py` with directories that contain your traceroute datasets. The location of the traceroutes is used in `api.py`.
