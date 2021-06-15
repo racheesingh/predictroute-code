@@ -1,3 +1,4 @@
+from consts import *
 import calendar
 import dateutil.parser
 import timeout_decorator
@@ -92,7 +93,6 @@ def build_rtree(fname):
 # Want to finish building the most recent radix tree once
 # to keep the runtime of the vanilla ip2asn_bgp_ts the same
 # as before.
-PFX2ASN_DIR = "/srv/data2/rachee/pfx2asn/data/"
 pfx2asn_files = os.listdir(PFX2ASN_DIR)
 pfx2asn_files = [PFX2ASN_DIR + fname for fname in pfx2asn_files]
 newest = max(pfx2asn_files , key = os.path.getctime)
@@ -1827,7 +1827,7 @@ def compute_dest_based_graphs_offline(fname,
     # logging.basicConfig(filename='logs/%s.log' % identifier,
     #                     format="%(funcName)s: %(lineno)d: %(message)s")
 
-    directory = "/srv/data1/rachee/historical/all/%s/%s/" % (node_gran, identifier)
+    directory =  HIST_DATA % (node_gran, identifier)
     if not os.path.exists(directory):
         os.makedirs(directory)
 
