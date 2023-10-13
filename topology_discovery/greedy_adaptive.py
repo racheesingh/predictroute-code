@@ -30,9 +30,7 @@ if sys.argv[1] == 'adaptive':
 else:
     adaptive = False
 bgp_graphs_dir = "graph_bgp_sim/"
-ATLAS_API_KEY_RS = "884f6bac-70cc-4451-ab69-b7df255f1b51"
-ATLAS_API_KEY_PG = "3a692f03-6ad4-421c-9049-979b9298d227"
-ATLAS_API_KEY_RS2 = "72a0b179-8058-423d-aae5-c1d275638d54"
+
 API_HOST = 'https://atlas.ripe.net'
 API_MMT_URI = 'api/v1/measurement'
 MSM_BUDGET = 10
